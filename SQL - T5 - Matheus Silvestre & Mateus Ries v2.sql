@@ -238,3 +238,77 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+INSERT INTO cidade (nome, uf) VALUES ("Penha", "SC"), ("Itajaí", "SC");
+INSERT INTO endereco (logradouro, numero, bairro, Cidade_id) VALUES ("Avenida Flor", "1043", "Praia Central", "1"), ("Rua camboriu", "722", "Centro", "2");
+INSERT INTO condominio (nome, cnpj, Endereco_id) VALUES ("Rosa Geraldina", "30.232.123/0001-19", "1"), ("Costa Verde", "12.345.678/0001-99", "2");
+INSERT INTO condomino (funcao, nome, cpf, email, senha, fixo, celular) VALUES 
+("0", "Carlos Santana", "11111111111", "carlossantana@yahoo.com", "123456", "(11) 1111-1111", "(11) 91111-1111"), 
+("0", "Roberto Cleiton", "22222222222", "robertocleiton@badoo.com", "654321", "(22) 2222-2222", "(22) 92222-2222"), 
+("1", "Silvio Santos", "33333333333", "silviosantos@sbt.com", "silviopresida123", "(33) 3333-3333", "(33) 93333-3333"), 
+("2", "Fauto Silva", "44444444444", "domingaodothiagoleifert@globo.com", "odeioOThiago45", "(44) 4444-4444", "(11) 94444-4444");
+INSERT INTO condominio_has_condomino VALUES
+("2", "1", "1", "101"),
+("1", "2", "2", "1401"),
+("1", "3", "2", "303"),
+("1", "4", "1", "902"),
+("1", "1", "1", "603");
+INSERT INTO ocorrencia (Condomino_id, Condominio_id, categoria, descricao) VALUES 
+("1", "1", "0", "Barulho chato"),
+("1", "2", "0", "Piscina quebrada");
+INSERT INTO salaodefesta (Condominio_id, capacidade, numSala) VALUES
+("1", 100, 1),
+("2", 80, 2);
+INSERT INTO reserva (Condomino_id, Condominio_id, SalaoDeFesta_id, data, horario) VALUES 
+("1", "2", "2", "2021-11-20", "19:00"),
+("3", "1", "1", "2021-11-21", "21:00");
+INSERT INTO funcionario (Condominio_id, nome, cpf, turno, funcao, salario, Endereco_id) VALUES
+("1", "Matheus Silvestre", "12312312300", "0", "0", "10000", "2"),
+("2", "Mateus Ries", "45645645699", "1", "1", "500", "1");
+INSERT INTO achadosperdidos (Condominio_id, Funcionario_id, descricao) VALUES ("2", "2", "Objeto estranho encontrado na portaria em baixo do tapete");
+
+UPDATE endereco SET numero = "301" WHERE id = "2";
+UPDATE condominio SET nome = "Costa Rosa Choque", cnpj = "12.345.678/5000-00" WHERE id = "2";
+UPDATE funcionario SET salario = "1500" WHERE id = "2";
+UPDATE ocorrencia SET descricao = "Deixa pra la, desisto desse barulho todo" WHERE id = "1";
+UPDATE condomino SET nome = "Fabinho da Hornet", senha = "XTZ660TENERE", email = "fabinho123hornet@tiktok.com" WHERE id = "2";
+
+DELETE FROM condominio_has_condomino WHERE Condominio_id = "1" AND Condomino_id = "3";
+DELETE FROM reserva WHERE Condomino_id = "3";
+DELETE FROM condomino WHERE id = "3";
+DELETE FROM ocorrencia WHERE id = "2";
+DELETE FROM salaodefesta WHERE id = "1";
+
+
+SELECT reserva.data, reserva.horario, condomino.nome FROM reserva INNER JOIN condomino ON  reserva.Condomino_id=condomino.id;
+SELECT condomino.nome, condominio_has_condomino.numBloco, condominio_has_condomino.numApartamento FROM condomino INNER JOIN condominio_has_condomino ON condomino.id=condominio_has_condomino.Condomino_id;
+SELECT condomino.nome, ocorrencia.descricao FROM condomino RIGHT JOIN ocorrencia ON condomino.id=ocorrencia.Condomino_id;
+SELECT funcionario.nome, funcionario.turno, condominio.nome FROM funcionario INNER JOIN condominio ON condominio.id=funcionario.Condominio_id; 
+SELECT condominio.nome, salaodefesta.capacidade FROM condominio INNER JOIN salaodefesta ON condominio.id=salaodefesta.Condominio_id;
+
+SELECT * FROM reserva;
+SELECT * FROM condomino;
+SELECT * FROM ocorrencia;
+SELECT * FROM condominio_has_condomino;
+SELECT nome, salario FROM funcionario;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
