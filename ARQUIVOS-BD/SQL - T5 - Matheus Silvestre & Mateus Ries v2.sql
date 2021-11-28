@@ -303,12 +303,3 @@ SELECT nome, salario FROM funcionario;
 
 
 
-
-
-
-
-
-
-
-
-
